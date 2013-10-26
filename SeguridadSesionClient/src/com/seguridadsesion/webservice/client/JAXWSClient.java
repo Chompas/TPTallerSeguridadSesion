@@ -1,8 +1,10 @@
 package com.seguridadsesion.webservice.client;
 
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.namespace.QName;
 
 import com.seguridadsesion.webservice.ApiServiceHelper;
 import com.seguridadsesion.webservice.ApiServiceHelperImplService;
@@ -23,7 +25,8 @@ public class JAXWSClient {
 			//Output pretty print using Marshaller
 			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 			
-			jaxbMarshaller.marshal(session, System.out);
+			//jaxbMarshaller.marshal(session, System.out);
+			jaxbMarshaller.marshal( new JAXBElement(new QName("uri","local"), SessionResponse.class, session ), System.out);
 		} catch (JAXBException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
