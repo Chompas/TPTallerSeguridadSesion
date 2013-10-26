@@ -26,6 +26,7 @@ public class ObjectFactory {
 
     private final static QName _Login_QNAME = new QName("http://webservice.seguridadsesion.com/", "login");
     private final static QName _LoginResponse_QNAME = new QName("http://webservice.seguridadsesion.com/", "loginResponse");
+    private final static QName _Session_QNAME = new QName("http://webservice.seguridadsesion.com/", "session");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.seguridadsesion.webservice
@@ -51,6 +52,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link SessionResponse }
+     * 
+     */
+    public SessionResponse createSessionResponse() {
+        return new SessionResponse();
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link Login }{@code >}}
      * 
      */
@@ -66,6 +75,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://webservice.seguridadsesion.com/", name = "loginResponse")
     public JAXBElement<LoginResponse> createLoginResponse(LoginResponse value) {
         return new JAXBElement<LoginResponse>(_LoginResponse_QNAME, LoginResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link SessionResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://webservice.seguridadsesion.com/", name = "session")
+    public JAXBElement<SessionResponse> createSession(SessionResponse value) {
+        return new JAXBElement<SessionResponse>(_Session_QNAME, SessionResponse.class, null, value);
     }
 
 }
