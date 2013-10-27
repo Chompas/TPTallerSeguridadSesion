@@ -30,11 +30,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Login }
+     * Create an instance of {@link RegisterUserResponse }
      * 
      */
-    public Login createLogin() {
-        return new Login();
+    public RegisterUserResponse createRegisterUserResponse() {
+        return new RegisterUserResponse();
     }
 
     /**
@@ -43,6 +43,22 @@ public class ObjectFactory {
      */
     public Session createSession() {
         return new Session();
+    }
+
+    /**
+     * Create an instance of {@link RegisterUser }
+     * 
+     */
+    public RegisterUser createRegisterUser() {
+        return new RegisterUser();
+    }
+
+    /**
+     * Create an instance of {@link Login }
+     * 
+     */
+    public Login createLogin() {
+        return new Login();
     }
 
     /**

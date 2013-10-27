@@ -10,7 +10,19 @@ import com.seguridadsesion.objects.SessionResponse;
 public interface ApiServiceHelper {
 	
 	@WebMethod public SessionResponse login(
-			@WebParam(name = "user")String user
+			@WebParam(name = "username") String username,
+			@WebParam(name = "password") String password
 			); 
+	
+	@WebMethod public SessionResponse registerUser(
+			@WebParam(name = "username") String username,
+			@WebParam(name = "password") String password,
+			@WebParam(name = "nombre") String nombre,
+			@WebParam(name = "apellido") String apellido,
+			@WebParam(name = "padron") String padron,
+			@WebParam(name = "fechaNac") String fechaNac,
+			@WebParam(name = "email") String email,
+			@WebParam(name = "rol") int rol
+			);
 
 }
