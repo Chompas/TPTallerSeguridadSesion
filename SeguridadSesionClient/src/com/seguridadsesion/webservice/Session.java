@@ -3,6 +3,7 @@ package com.seguridadsesion.webservice;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -33,7 +34,8 @@ import javax.xml.bind.annotation.XmlType;
     "reason",
     "success"
 })
-public class SessionResponse {
+@XmlRootElement(name = "session")
+public class Session {
 
     protected String authToken;
     protected String reason;

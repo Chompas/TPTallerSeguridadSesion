@@ -1,10 +1,7 @@
 
 package com.seguridadsesion.webservice;
 
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
-import javax.xml.namespace.QName;
 
 
 /**
@@ -24,15 +21,20 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _Login_QNAME = new QName("http://webservice.seguridadsesion.com/", "login");
-    private final static QName _LoginResponse_QNAME = new QName("http://webservice.seguridadsesion.com/", "loginResponse");
-    private final static QName _Session_QNAME = new QName("http://webservice.seguridadsesion.com/", "session");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.seguridadsesion.webservice
      * 
      */
     public ObjectFactory() {
+    }
+
+    /**
+     * Create an instance of {@link Session }
+     * 
+     */
+    public Session createSession() {
+        return new Session();
     }
 
     /**
@@ -49,41 +51,6 @@ public class ObjectFactory {
      */
     public LoginResponse createLoginResponse() {
         return new LoginResponse();
-    }
-
-    /**
-     * Create an instance of {@link SessionResponse }
-     * 
-     */
-    public SessionResponse createSessionResponse() {
-        return new SessionResponse();
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Login }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://webservice.seguridadsesion.com/", name = "login")
-    public JAXBElement<Login> createLogin(Login value) {
-        return new JAXBElement<Login>(_Login_QNAME, Login.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link LoginResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://webservice.seguridadsesion.com/", name = "loginResponse")
-    public JAXBElement<LoginResponse> createLoginResponse(LoginResponse value) {
-        return new JAXBElement<LoginResponse>(_LoginResponse_QNAME, LoginResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link SessionResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://webservice.seguridadsesion.com/", name = "session")
-    public JAXBElement<SessionResponse> createSession(SessionResponse value) {
-        return new JAXBElement<SessionResponse>(_Session_QNAME, SessionResponse.class, null, value);
     }
 
 }

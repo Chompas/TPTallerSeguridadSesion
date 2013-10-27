@@ -4,6 +4,7 @@ package com.seguridadsesion.webservice;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -30,20 +31,21 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "loginResponse", propOrder = {
     "_return"
 })
+@XmlRootElement(name = "loginResponse")
 public class LoginResponse {
 
     @XmlElement(name = "return")
-    protected SessionResponse _return;
+    protected Session _return;
 
     /**
      * Gets the value of the return property.
      * 
      * @return
      *     possible object is
-     *     {@link SessionResponse }
+     *     {@link Session }
      *     
      */
-    public SessionResponse getReturn() {
+    public Session getReturn() {
         return _return;
     }
 
@@ -52,10 +54,10 @@ public class LoginResponse {
      * 
      * @param value
      *     allowed object is
-     *     {@link SessionResponse }
+     *     {@link Session }
      *     
      */
-    public void setReturn(SessionResponse value) {
+    public void setReturn(Session value) {
         this._return = value;
     }
 

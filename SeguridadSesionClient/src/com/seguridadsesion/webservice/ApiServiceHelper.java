@@ -25,16 +25,16 @@ public interface ApiServiceHelper {
 
     /**
      * 
-     * @param arg0
+     * @param user
      * @return
-     *     returns com.seguridadsesion.webservice.SessionResponse
+     *     returns com.seguridadsesion.webservice.Session
      */
     @WebMethod
     @WebResult(targetNamespace = "")
     @RequestWrapper(localName = "login", targetNamespace = "http://webservice.seguridadsesion.com/", className = "com.seguridadsesion.webservice.Login")
     @ResponseWrapper(localName = "loginResponse", targetNamespace = "http://webservice.seguridadsesion.com/", className = "com.seguridadsesion.webservice.LoginResponse")
-    public SessionResponse login(
-        @WebParam(name = "arg0", targetNamespace = "")
-        String arg0);
+    public Session login(
+        @WebParam(name = "user", targetNamespace = "")
+        String user);
 
 }
