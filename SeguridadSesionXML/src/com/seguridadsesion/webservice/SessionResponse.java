@@ -2,22 +2,24 @@ package com.seguridadsesion.webservice;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="response")
+@XmlRootElement(name = "response")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class SessionResponse {
- 
-	@XmlElement
-    private String authToken;
-	@XmlElement
-    private String reason;
-	@XmlElement
-    private Boolean success;
 
-    public SessionResponse(){}
+	@XmlElement
+	private String authToken;
+	@XmlElement
+	private String reason;
+	@XmlElement
+	private Boolean success;
+	@XmlElement
+	private String username;
+
+	public SessionResponse() {
+	}
 
 	public void setAuthToken(String authToken) {
 		this.authToken = authToken;
@@ -30,5 +32,8 @@ public class SessionResponse {
 	public void setSuccess(Boolean success) {
 		this.success = success;
 	}
-   
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
 }
