@@ -1,8 +1,5 @@
 package com.seguridadsesion.webservice;
 
-import java.math.BigInteger;
-import java.security.SecureRandom;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -38,9 +35,13 @@ public class LoginAPIHelper {
 			@QueryParam("fecha") String fecha,
 			@QueryParam("email") String email, @QueryParam("rol") int rol) {
 
+		// Llama a integracion y verifica la existencia del usuario.
+		// De no ser asi, crea el usuario en la DB y envia mail para
+		// confirmacion
+
 		SessionResponse session = new SessionResponse();
 		session.setSuccess(true);
-		session.setReason(email);
+		//session.setReason("");
 		return session;
 	}
 
@@ -53,9 +54,15 @@ public class LoginAPIHelper {
 	@Produces(MediaType.APPLICATION_XML)
 	public SessionResponse login(@QueryParam("username") String username,
 			@QueryParam("password") String password) {
+
+		// Verifica datos del usuario y genera token
+
 		SessionResponse session = new SessionResponse();
-		session.setAuthToken(new BigInteger(130, new SecureRandom()).toString(32));
+		String token = TokenManager.getInstance().getToken();
+		TokenManager.getInstance().setToken(token);
+		session.setAuthToken(token);
 		session.setSuccess(true);
+
 		return session;
 	}
 
@@ -63,8 +70,11 @@ public class LoginAPIHelper {
 	@Path("/logout")
 	@Produces(MediaType.APPLICATION_XML)
 	public SessionResponse logout(@QueryParam("token") String authToken) {
+		
+		Boolean success = TokenManager.getInstance().removeToken(authToken);
+
 		SessionResponse session = new SessionResponse();
-		session.setSuccess(true);
+		session.setSuccess(success);
 		return session;
 	}
 
@@ -72,9 +82,22 @@ public class LoginAPIHelper {
 	@Path("/istokenvalid")
 	@Produces(MediaType.APPLICATION_XML)
 	public SessionResponse isTokenValid(@QueryParam("token") String authToken) {
+
+		// Verifica que exista la token
+
+		Boolean result = TokenManager.getInstance().isTokenValid(authToken);
+
 		SessionResponse session = new SessionResponse();
-		session.setUsername("user1");
-		session.setSuccess(true);
+
+		if (result) {
+			// TODO: Va a buscar el nombre del usuario
+			session.setUsername("user1");
+		} else {
+			session.setReason("La token es inválida");
+		}
+
+		session.setSuccess(result);
+
 		return session;
 	}
 
@@ -82,6 +105,10 @@ public class LoginAPIHelper {
 	@Path("/activateuser")
 	@Produces(MediaType.APPLICATION_XML)
 	public SessionResponse activateUser(@QueryParam("username") String username) {
+
+		// Se llama cuando el usuario confirma via email la cuenta
+		// Setea como activado el usuario
+
 		SessionResponse session = new SessionResponse();
 		session.setSuccess(true);
 		return session;
@@ -95,6 +122,9 @@ public class LoginAPIHelper {
 			@QueryParam("oldpassword") String oldPassword,
 			@QueryParam("newpassword") String newPassword,
 			@QueryParam("userid") String userId) {
+
+		// Verifica oldPassword y de ser correcta, actualiza datos en BD
+
 		SessionResponse session = new SessionResponse();
 		session.setSuccess(true);
 		return session;
@@ -105,6 +135,9 @@ public class LoginAPIHelper {
 	@Produces(MediaType.APPLICATION_XML)
 	public SessionResponse resetPassword(@QueryParam("token") String authToken,
 			@QueryParam("userid") String userId) {
+
+		// Resetea la password
+
 		SessionResponse session = new SessionResponse();
 		session.setSuccess(true);
 		return session;
@@ -116,6 +149,9 @@ public class LoginAPIHelper {
 	public SessionResponse disableAccount(
 			@QueryParam("token") String authToken,
 			@QueryParam("userid") String userId) {
+
+		// Setea la cuenta como desactivada
+
 		SessionResponse session = new SessionResponse();
 		session.setSuccess(true);
 		return session;
@@ -126,6 +162,9 @@ public class LoginAPIHelper {
 	@Produces(MediaType.APPLICATION_XML)
 	public SessionResponse enableAccount(@QueryParam("token") String authToken,
 			@QueryParam("userid") String userId) {
+
+		// Activa la cuenta desactivada
+
 		SessionResponse session = new SessionResponse();
 		session.setSuccess(true);
 		return session;
