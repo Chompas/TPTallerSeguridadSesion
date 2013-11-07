@@ -10,7 +10,7 @@ import javax.ws.rs.core.MediaType;
 public class LoginAPIHelper {
 
 	// USO:
-	// http://localhost:8080/SeguridadSesionXML/seguridadsesion/registeruser?username=javi29c&password=123456&nombre=Javier&apellido=Lara&padron=93343&fechaNac=11/10/1991&email=javi29c@yahoo.com&rol=1
+	// http://localhost:8080/SeguridadSesionXML/seguridadsesion/{method}?{param1}={value1}&{param2}={value2}&...
 
 	/*
 	 * registeruser
@@ -56,10 +56,11 @@ public class LoginAPIHelper {
 			@QueryParam("password") String password) {
 
 		// Verifica datos del usuario y genera token
+		
+		String token = TokenManager.getInstance().getToken();
+		TokenManager.getInstance().setToken(token,username);
 
 		SessionResponse session = new SessionResponse();
-		String token = TokenManager.getInstance().getToken();
-		TokenManager.getInstance().setToken(token);
 		session.setAuthToken(token);
 		session.setSuccess(true);
 
@@ -83,15 +84,17 @@ public class LoginAPIHelper {
 	@Produces(MediaType.APPLICATION_XML)
 	public SessionResponse isTokenValid(@QueryParam("token") String authToken) {
 
-		// Verifica que exista la token
+		// Verifica que exista la token y de ser asi refresca el tiempo de expiracion
 
-		Boolean result = TokenManager.getInstance().isTokenValid(authToken);
+		String username = TokenManager.getInstance().isTokenValid(authToken);
 
 		SessionResponse session = new SessionResponse();
 
-		if (result) {
-			// TODO: Va a buscar el nombre del usuario
-			session.setUsername("user1");
+		Boolean result = false;
+		
+		if (username != "") {
+			session.setUsername(username);
+			result = true;
 		} else {
 			session.setReason("La token es inválida");
 		}

@@ -2,40 +2,56 @@ package com.seguridadsesion.webservice;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class TokenManager {
-	//SINGLETON
-	
+	// SINGLETON
+
 	private static TokenManager instance = null;
-	
-	private static ArrayList<String> validTokens;
-	
+
+	private static HashMap<String, Token> validTokens;
+
 	protected TokenManager() {
-		validTokens = new ArrayList<String>();		
+		validTokens = new HashMap<String, Token>();
 	}
-	
+
 	public static TokenManager getInstance() {
-		if(instance == null) {
+		if (instance == null) {
 			instance = new TokenManager();
 		}
 		return instance;
 	}
-	
-	public Boolean isTokenValid(String token) {
-		return validTokens.contains(token);
+
+	public String isTokenValid(String token) {
+		Token tokenObject = validTokens.get(token);
+		String username = "";
+		if(tokenObject != null) {
+			if(!tokenObject.hasExpired()) {
+				
+				username = tokenObject.getUsername();
+				tokenObject.refreshToken();
+			}else{
+				System.out.println("expiro");
+				removeToken(token);
+			}
+		}
+		return username;
 	}
-	
-	public void setToken(String token) {
-		validTokens.add(token);
+
+	public void setToken(String token, String username) {
+		validTokens.put(token, new Token(username));
 	}
-	
+
 	public String getToken() {
 		return new BigInteger(130, new SecureRandom()).toString(32);
 	}
-	
+
 	public Boolean removeToken(String token) {
-		return validTokens.remove(token);
+		Token tokenObject = validTokens.remove(token);
+		if (tokenObject != null) {
+			return true;
+		}
+		return false;
 	}
-	
+
 }
