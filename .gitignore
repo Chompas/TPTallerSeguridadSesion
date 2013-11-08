@@ -5,3 +5,5 @@
 *.ear
 
 *.classpath
+
+.DS_Store
