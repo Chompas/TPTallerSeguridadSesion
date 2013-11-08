@@ -6,6 +6,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import org.jasypt.util.password.StrongPasswordEncryptor;
+
 @Path("/seguridadsesion")
 public class LoginAPIHelper {
 
@@ -36,12 +38,18 @@ public class LoginAPIHelper {
 			@QueryParam("email") String email, @QueryParam("rol") int rol) {
 
 		// Llama a integracion y verifica la existencia del usuario.
-		// De no ser asi, crea el usuario en la DB y envia mail para
-		// confirmacion
+		// Si existe, devuelve success=false
+		// Si no existe, crea el usuario en la DB con activado=false -> LLAMADA
+		// A WS DE INTEGRACION
+		// Envia mail para confirmacion
+
+		// Password encrypt
+		StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
+		String encryptedPassword = passwordEncryptor.encryptPassword(password);
 
 		SessionResponse session = new SessionResponse();
 		session.setSuccess(true);
-		//session.setReason("");
+		// session.setReason("");
 		return session;
 	}
 
@@ -55,14 +63,31 @@ public class LoginAPIHelper {
 	public SessionResponse login(@QueryParam("username") String username,
 			@QueryParam("password") String password) {
 
-		// Verifica datos del usuario y genera token
-		
-		String token = TokenManager.getInstance().getToken();
-		TokenManager.getInstance().setToken(token,username);
+		// Verifica datos del usuario -> LLAMADA A WS DE INTEGRACION
+
+		StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
+		String encryptedPassword = "q6PWkDqQDAKObhh52owPKu2AcsvbThhkt2QEGIwvRY23XyRZ5y9WUqE9q6PT31pZ"; // La
+																										// que
+																										// obtiene
+																										// de
+																										// la
+																										// BD
+
+		Boolean success = false;
+		if (passwordEncryptor.checkPassword(password, encryptedPassword)) {
+			success = true;
+		}
 
 		SessionResponse session = new SessionResponse();
-		session.setAuthToken(token);
-		session.setSuccess(true);
+
+		// Si es correcta, genera token
+		if (success) {
+			String token = TokenManager.getInstance().getToken();
+			TokenManager.getInstance().setToken(token, username);
+			session.setAuthToken(token);
+		}
+
+		session.setSuccess(success);
 
 		return session;
 	}
@@ -71,7 +96,8 @@ public class LoginAPIHelper {
 	@Path("/logout")
 	@Produces(MediaType.APPLICATION_XML)
 	public SessionResponse logout(@QueryParam("token") String authToken) {
-		
+
+		// Elimina la token
 		Boolean success = TokenManager.getInstance().removeToken(authToken);
 
 		SessionResponse session = new SessionResponse();
@@ -84,22 +110,23 @@ public class LoginAPIHelper {
 	@Produces(MediaType.APPLICATION_XML)
 	public SessionResponse isTokenValid(@QueryParam("token") String authToken) {
 
-		// Verifica que exista la token y de ser asi refresca el tiempo de expiracion
+		// Verifica que exista la token y de ser asi refresca el tiempo de
+		// expiracion
 
 		String username = TokenManager.getInstance().isTokenValid(authToken);
 
 		SessionResponse session = new SessionResponse();
 
-		Boolean result = false;
-		
+		Boolean success = false;
+
 		if (username != "") {
 			session.setUsername(username);
-			result = true;
+			success = true;
 		} else {
 			session.setReason("La token es inválida");
 		}
 
-		session.setSuccess(result);
+		session.setSuccess(success);
 
 		return session;
 	}
@@ -111,6 +138,8 @@ public class LoginAPIHelper {
 
 		// Se llama cuando el usuario confirma via email la cuenta
 		// Setea como activado el usuario
+
+		// Setea como activado al usuario -> LLAMADA A WS DE INTEGRACION
 
 		SessionResponse session = new SessionResponse();
 		session.setSuccess(true);
@@ -128,6 +157,27 @@ public class LoginAPIHelper {
 
 		// Verifica oldPassword y de ser correcta, actualiza datos en BD
 
+		String username = TokenManager.getInstance().isTokenValid(authToken);
+
+		// Busca password del usuario -> LLAMADA A WS DE INTEGRACION
+		String encryptedPassword = "";
+
+		StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
+
+		Boolean success = true;
+		// Chequea que sea la misma que oldPassword
+		if (!passwordEncryptor.checkPassword(oldPassword, encryptedPassword)) {
+			success = false;
+		} else {
+			// Encripta la nueva
+			String newEncryptedPassword = passwordEncryptor
+					.encryptPassword(newPassword);
+			// Actualiza password en BD -> LLAMADA A WS DE INTEGRACION
+
+		}
+
+		//
+
 		SessionResponse session = new SessionResponse();
 		session.setSuccess(true);
 		return session;
@@ -141,6 +191,15 @@ public class LoginAPIHelper {
 
 		// Resetea la password
 
+		String username = TokenManager.getInstance().isTokenValid(authToken);
+
+		// Genera password aleatorio (uso un getToken)
+		String newPassword = TokenManager.getInstance().getToken();
+
+		// Lo guarda como password del usuario -> LLAMADA A WS DE INTEGRACION
+
+		// Envia mail al user con nueva password
+
 		SessionResponse session = new SessionResponse();
 		session.setSuccess(true);
 		return session;
@@ -153,7 +212,9 @@ public class LoginAPIHelper {
 			@QueryParam("token") String authToken,
 			@QueryParam("userid") String userId) {
 
-		// Setea la cuenta como desactivada
+		String username = TokenManager.getInstance().isTokenValid(authToken);
+
+		// Setea en BD habilitada=false -> LLAMADA A WS DE INTEGRACION
 
 		SessionResponse session = new SessionResponse();
 		session.setSuccess(true);
@@ -166,7 +227,9 @@ public class LoginAPIHelper {
 	public SessionResponse enableAccount(@QueryParam("token") String authToken,
 			@QueryParam("userid") String userId) {
 
-		// Activa la cuenta desactivada
+		String username = TokenManager.getInstance().isTokenValid(authToken);
+
+		// Setea en BD habilitada=true -> LLAMADA A WS DE INTEGRACION
 
 		SessionResponse session = new SessionResponse();
 		session.setSuccess(true);

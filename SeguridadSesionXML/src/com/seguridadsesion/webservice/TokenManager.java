@@ -25,13 +25,12 @@ public class TokenManager {
 	public String isTokenValid(String token) {
 		Token tokenObject = validTokens.get(token);
 		String username = "";
-		if(tokenObject != null) {
-			if(!tokenObject.hasExpired()) {
-				
+		if (tokenObject != null) {
+			if (!tokenObject.hasExpired()) {
+
 				username = tokenObject.getUsername();
 				tokenObject.refreshToken();
-			}else{
-				System.out.println("expiro");
+			} else {
 				removeToken(token);
 			}
 		}

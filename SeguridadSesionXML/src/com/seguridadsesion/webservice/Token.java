@@ -8,14 +8,13 @@ public class Token {
 	private String username;
 
 	private Timestamp expirationTime;
-	
+
 	private int refreshTime = 600000; // 10 minutos
 
 	public Token(String username) {
 		this.username = username;
 		Date date = new Date();
 		this.expirationTime = new Timestamp(date.getTime() + refreshTime);
-		System.out.println("Expiration time: "+this.expirationTime);
 	}
 
 	public String getUsername() {
@@ -29,7 +28,6 @@ public class Token {
 	public void refreshToken() {
 		Date date = new Date();
 		this.expirationTime = new Timestamp(date.getTime() + refreshTime);
-		System.out.println("New Expiration time: "+ this.expirationTime);
 	}
 
 	public Boolean hasExpired() {
