@@ -1,5 +1,7 @@
 package com.seguridadsesion.webservice;
 
+import java.rmi.RemoteException;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -14,17 +16,6 @@ public class LoginAPIHelper {
 	// USO:
 	// http://localhost:8080/SeguridadSesionXML/seguridadsesion/{method}?{param1}={value1}&{param2}={value2}&...
 
-	/*
-	 * registeruser
-	 * 
-	 * Recibe un diccionario con los datos de registro (apellido, nombres,
-	 * padrón, fecha de nacimiento, email y password) y el rol que va a tener el
-	 * usuario. Valida los datos, encripta el password y registra al usuario
-	 * (interactuando con la capa de Persistencia). Lo deja pendiente hasta la
-	 * confirmación por mail. Devuelve XML con resultado de la operación y la
-	 * razón del error en caso de existir.
-	 */
-
 	@GET
 	@Path("/registeruser")
 	@Produces(MediaType.APPLICATION_XML)
@@ -38,18 +29,64 @@ public class LoginAPIHelper {
 			@QueryParam("email") String email, @QueryParam("rol") int rol) {
 
 		// Llama a integracion y verifica la existencia del usuario.
+		// IntegracionStub integracion = null;
+		// IntegracionStub.SeleccionarDatos selectRequest = null;
+		// IntegracionStub.SeleccionarDatos selectResponse = null;
+		//
+		// try {
+		// integracion = new IntegracionStub();
+		// selectRequest = new IntegracionStub.SeleccionarDatos();
+		// selectRequest.setXml("<?xml version=\"1.0\"?><WS><Usuario><username>usuario_prueba</username></Usuario></WS>");
+		// selectResponse = integracion.seleccionarDatos(selectRequest);
+		// } catch (RemoteException excepcionDeInvocacion) {
+		// System.err.println(excepcionDeInvocacion.toString());
+		// }
+
 		// Si existe, devuelve success=false
 		// Si no existe, crea el usuario en la DB con activado=false -> LLAMADA
 		// A WS DE INTEGRACION
-		// Envia mail para confirmacion
 
 		// Password encrypt
 		StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
 		String encryptedPassword = passwordEncryptor.encryptPassword(password);
+		
+//		IntegracionStub.GuardarDatos saveRequest = null;
+//		IntegracionStub.GuardarDatosResponse saveResponse = null;
+//
+//		try {
+//			integracion = new IntegracionStub();
+//			saveRequest = new IntegracionStub.GuardarDatos();
+//
+//			saveRequest.setXml("<?xml version=\"1.0\"?>"
+//					+ "<WS>"
+//						+ "<Usuario>"
+//							+ "<username>"+ username + "</username>"
+//							+ "<password>"+encryptedPassword+"</password>"
+//							+ "<nombre>" + nombres+ "</nombre>"
+//							+ "<apellido>"+apellido+"</apellido>"
+//							+ "<padron>" + padron + "</padron>"
+//							+ "<email>"+email+"</email>"
+//							+ "<fechaNac>"+fecha+"</fechaNac>"
+//							+ "<activado>False</activado>"
+//							+ "<habilitado>True</habilitado>"
+//						+ "</Usuario>"
+//					+ "</WS>");
+//
+//			saveResponse = integracion.guardarDatos(saveRequest);
+//
+//			System.out.println(saveResponse.get_return());
+//
+//		} catch (RemoteException excepcionDeInvocacion) {
+//			System.err.println(excepcionDeInvocacion.toString());
+//
+//		}
+
+		// Envia mail para confirmacion
+
 
 		SessionResponse session = new SessionResponse();
 		session.setSuccess(true);
-		// session.setReason("");
+//		session.setReason("");
 		return session;
 	}
 
@@ -66,12 +103,11 @@ public class LoginAPIHelper {
 		// Verifica datos del usuario -> LLAMADA A WS DE INTEGRACION
 
 		StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
-		String encryptedPassword = "q6PWkDqQDAKObhh52owPKu2AcsvbThhkt2QEGIwvRY23XyRZ5y9WUqE9q6PT31pZ"; // La
-																										// que
-																										// obtiene
-																										// de
-																										// la
-																										// BD
+		//HACK
+		String encryptedPassword = "q6PWkDqQDAKObhh52owPKu2AcsvbThhkt2QEGIwvRY23XyRZ5y9WUqE9q6PT31pZ"; 
+		// La que obtiene de la BD
+		
+		
 
 		Boolean success = false;
 		if (passwordEncryptor.checkPassword(password, encryptedPassword)) {
