@@ -1,7 +1,7 @@
 package wtp;
 
 import java.rmi.RemoteException;
-import wtp.ConverterStub;
+
 import org.apache.axis2.AxisFault;
 
 public class ConverterClient {
@@ -9,9 +9,9 @@ public class ConverterClient {
 	public static void main(String[] args) {
 		
         try {
-            ConverterStub stub = new ConverterStub();
-            ConverterStub.Suma request = new ConverterStub.Suma();
-            ConverterStub.SumaResponse response = new ConverterStub.SumaResponse();
+            LoginAPIHelperStub stub = new LoginAPIHelperStub();
+            LoginAPIHelperStub.Suma request = new LoginAPIHelperStub.Suma();
+            LoginAPIHelperStub.SumaResponse response = new LoginAPIHelperStub.SumaResponse();
             
             request.setX(7);
             request.setY(8);
