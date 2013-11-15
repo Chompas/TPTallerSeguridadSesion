@@ -30,11 +30,29 @@ public class ConverterClient {
             
             System.out.println(response2.get_return());
             
+            LoginAPIHelperStub stub3 = new LoginAPIHelperStub();
+            LoginAPIHelperStub.RegisterUser request3 = new LoginAPIHelperStub.RegisterUser();
+            LoginAPIHelperStub.RegisterUserResponse response3 = new LoginAPIHelperStub.RegisterUserResponse();
             
-    } catch (AxisFault e) {
-            e.printStackTrace();
-    } catch (RemoteException e) {
-            e.printStackTrace();
-    }
+            request3.setUsername("JAVI");
+            request3.setApellido("ddas");
+            request3.setEmail("dsada");
+            request3.setFecha("dsad");
+            request3.setNombres("JDSAD");
+            request3.setPadron("123-2");
+            request3.setPassword("123");
+            request3.setRol(1);
+            
+            
+            
+            response3 = stub3.registerUser(request3);
+            
+            System.out.println(response3.get_return());
+            
+	    } catch (AxisFault e) {
+	            e.printStackTrace();
+	    } catch (RemoteException e) {
+	            e.printStackTrace();
+	    }
 	}
 }
