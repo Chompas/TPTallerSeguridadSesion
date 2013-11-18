@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.w3c.dom.Document;
 
+
 @XmlRootElement(name = "User")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class User {
@@ -96,11 +97,13 @@ public class User {
 		this.habilitado = habilitado;
 	}
 	
-	public boolean usuarioExistente(String xmlData) {
+	public Boolean usuarioExistente(String xmlData) {
 		XmlUtil xmlutil = new XmlUtil();
 		Document doc;
+		Boolean result;
 		try {
 			doc = xmlutil.loadXMLFromString(xmlData);
+			result = doc.getDocumentElement().getNodeName() == "WS";
 		} catch(Exception e) {
 			System.err.println(e.toString());
 		}

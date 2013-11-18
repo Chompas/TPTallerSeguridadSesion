@@ -4,6 +4,8 @@ import java.rmi.RemoteException;
 
 import org.jasypt.util.password.StrongPasswordEncryptor;
 
+import com.ws.services.IntegracionStub;
+
 public class LoginAPIHelper {
 
 	private XmlUtil xmlutil = new XmlUtil();
@@ -13,7 +15,7 @@ public class LoginAPIHelper {
 			String email, int rol) {
 
 		SessionResponse session = new SessionResponse();
-
+/*
 		User user = new User();
 
 		user.setUsername(username);
@@ -21,13 +23,15 @@ public class LoginAPIHelper {
 		// Llama a integracion y verifica la existencia del usuario.
 		IntegracionStub integracion = null;
 		IntegracionStub.SeleccionarDatos selectRequest = null;
-		IntegracionStub.SeleccionarDatos selectResponse = null;
+		IntegracionStub.SeleccionarDatosResponse selectResponse = null;
 
 		try {
 			integracion = new IntegracionStub();
 			selectRequest = new IntegracionStub.SeleccionarDatos();
-			selectRequest.setXml("<?xml version=\"1.0\"?><WS>"
-					+ xmlutil.convertToXml(user, User.class) + "</WS>");
+			String xml = xmlutil.convertToXml(user, User.class);
+			//selectRequest.setXml("<?xml version=\"1.0\"?><WS>"
+			//		+ xml+ "</WS>");
+			selectRequest.setXml("<?xml version=\"1.0\"?><Usuario><username>usuario_prueba</username></Usuario>");
 			selectResponse = integracion.seleccionarDatos(selectRequest);
 		} catch (RemoteException e) {
 			System.err.println(e.toString());
@@ -66,11 +70,31 @@ public class LoginAPIHelper {
 				System.err.println(excepcionDeInvocacion.toString());
 				
 			}
-			
+			*/
 			// Envia mail para confirmacion
+		
+			IntegracionStub integracion = null;
+			IntegracionStub.GuardarDatos request = null;
+			IntegracionStub.GuardarDatosResponse response = null;
 			
-			session.setSuccess(true);
-		}
+	
+			try{
+				integracion = new IntegracionStub();
+				request = new IntegracionStub.GuardarDatos();
+				
+				request.setXml("<?xml version=\"1.0\"?><WS><Usuario><username>"+username+"</username><nombre>"+nombres+"</nombre><apellido>"+apellido+"</apellido></Usuario></WS>");
+				
+				response = integracion.guardarDatos(request);
+			
+				System.out.println(response.get_return());
+			}catch(RemoteException excepcionDeInvocacion){
+				session.setReason(excepcionDeInvocacion.toString());
+				session.setSuccess(false);
+				
+			}
+			//session.setReason(response.get_return());
+			//session.setSuccess(true);
+		//}
 
 		return xmlutil.convertToXml(session, SessionResponse.class);
 	}
@@ -79,28 +103,51 @@ public class LoginAPIHelper {
 	public String login(String username, String password) {
 
 		// Verifica datos del usuario -> LLAMADA A WS DE INTEGRACION
-
-		StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
-		// HACK para pass=123456
-		String encryptedPassword = "q6PWkDqQDAKObhh52owPKu2AcsvbThhkt2QEGIwvRY23XyRZ5y9WUqE9q6PT31pZ";
-		// La que obtiene de la BD
-
-		Boolean success = false;
-		if (passwordEncryptor.checkPassword(password, encryptedPassword)) {
-			success = true;
-		}
-
+		User user = new User();
 		SessionResponse session = new SessionResponse();
 
-		// Si es correcta, genera token
-		if (success) {
-			String token = TokenManager.getInstance().getToken();
-			TokenManager.getInstance().setToken(token, username);
-			session.setAuthToken(token);
+		user.setUsername(username);
+
+		// Llama a integracion y verifica la existencia del usuario.
+		IntegracionStub integracion = null;
+		IntegracionStub.SeleccionarDatos selectRequest = null;
+		IntegracionStub.SeleccionarDatosResponse selectResponse = null;
+
+		try {
+			integracion = new IntegracionStub();
+			selectRequest = new IntegracionStub.SeleccionarDatos();
+			selectRequest.setXml("<?xml version=\"1.0\"?><WS>"
+					+ xmlutil.convertToXml(user, User.class) + "</WS>");
+			selectResponse = integracion.seleccionarDatos(selectRequest);
+		} catch (RemoteException e) {
+			System.err.println(e.toString());
 		}
+		
+		
 
-		session.setSuccess(success);
-
+		if (!user.usuarioExistente(selectResponse.get_return())) {
+			session.setSuccess(false);
+			session.setReason("No existe el usuario");
+		} else {
+			StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
+		//	String encryptedPassword = user.getPasswordFromXML(selectResponse.get_return());
+			String encryptedPassword = "SDadsad";
+			
+			Boolean success = false;
+			if (passwordEncryptor.checkPassword(password, encryptedPassword)) {
+				success = true;
+			}
+	
+	
+			// Si es correcta, genera token
+			if (success) {
+				String token = TokenManager.getInstance().getToken();
+				TokenManager.getInstance().setToken(token, username);
+				session.setAuthToken(token);
+			}
+	
+			session.setSuccess(success);
+		}
 		return xmlutil.convertToXml(session, SessionResponse.class);
 	}
 
@@ -142,7 +189,23 @@ public class LoginAPIHelper {
 		// Se llama cuando el usuario confirma via email la cuenta
 		// Setea como activado el usuario
 
-		// Setea como activado al usuario -> LLAMADA A WS DE INTEGRACION
+		// Setea como activado al usuario
+		User user = new User();
+		user.setActivado(true);
+		
+		IntegracionStub integracion = null;
+		IntegracionStub.ActualizarDatos selectRequest = null;
+		IntegracionStub.ActualizarDatosResponse selectResponse = null;
+
+		try {
+			integracion = new IntegracionStub();
+			selectRequest = new IntegracionStub.ActualizarDatos();
+			selectRequest.setXml("<?xml version=\"1.0\"?><WS>"
+					+ xmlutil.convertToXml(user, User.class) + "</WS>");
+			selectResponse = integracion.actualizarDatos(selectRequest);
+		} catch (RemoteException e) {
+			System.err.println(e.toString());
+		}
 
 		SessionResponse session = new SessionResponse();
 		session.setSuccess(true);
