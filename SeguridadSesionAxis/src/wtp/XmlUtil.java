@@ -1,10 +1,16 @@
 package wtp;
 
+import java.io.StringReader;
 import java.io.StringWriter;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
 
 public class XmlUtil {
 	public String convertToXml(Object source, Class... type ) {
@@ -20,5 +26,13 @@ public class XmlUtil {
         }
 
         return result;
+	}
+	
+	public static Document loadXMLFromString(String xml) throws Exception
+	{
+	    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+	    DocumentBuilder builder = factory.newDocumentBuilder();
+	    InputSource is = new InputSource(new StringReader(xml));
+	    return builder.parse(is);
 	}
 }
