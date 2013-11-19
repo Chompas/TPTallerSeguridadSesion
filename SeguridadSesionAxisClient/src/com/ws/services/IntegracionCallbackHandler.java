@@ -108,6 +108,22 @@
             public void receiveErrorguardarDatos(java.lang.Exception e) {
             }
                 
+           /**
+            * auto generated Axis2 call back method for getXMLDocument method
+            * override this method for handling normal response from getXMLDocument operation
+            */
+           public void receiveResultgetXMLDocument(
+                    com.ws.services.IntegracionStub.GetXMLDocumentResponse result
+                        ) {
+           }
+
+          /**
+           * auto generated Axis2 Error handler
+           * override this method for handling error response from getXMLDocument operation
+           */
+            public void receiveErrorgetXMLDocument(java.lang.Exception e) {
+            }
+                
 
 
     }

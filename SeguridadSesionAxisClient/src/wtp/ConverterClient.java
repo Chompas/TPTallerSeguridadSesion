@@ -47,7 +47,7 @@ public class ConverterClient {
             
             response3 = stub3.registerUser(request3);
             
-            System.out.println(response3.get_return());
+           // System.out.println(response3.get_return());
             
 	    } catch (AxisFault e) {
 	            e.printStackTrace();
