@@ -15,7 +15,7 @@ public class LoginAPIHelper {
 			String email, int rol) {
 
 		SessionResponse session = new SessionResponse();
-/*
+
 		User user = new User();
 
 		user.setUsername(username);
@@ -31,7 +31,7 @@ public class LoginAPIHelper {
 			String xml = xmlutil.convertToXml(user, User.class);
 			//selectRequest.setXml("<?xml version=\"1.0\"?><WS>"
 			//		+ xml+ "</WS>");
-			selectRequest.setXml("<?xml version=\"1.0\"?><Usuario><username>usuario_prueba</username></Usuario>");
+			selectRequest.setXml("<?xml version=\"1.0\"?><Usuario><username>"+username+"</username></Usuario>");
 			selectResponse = integracion.seleccionarDatos(selectRequest);
 		} catch (RemoteException e) {
 			System.err.println(e.toString());
@@ -62,7 +62,16 @@ public class LoginAPIHelper {
 				integracion = new IntegracionStub();
 				saveRequest = new IntegracionStub.GuardarDatos();
 				
-				saveRequest.setXml("<?xml version=\"1.0\"?>" + "<WS>" + xmlutil.convertToXml(user, User.class) + "</WS>");
+				//saveRequest.setXml("<?xml version=\"1.0\"?>" + "<WS>" + xmlutil.convertToXml(user, User.class) + "</WS>");
+				saveRequest.setXml("<?xml version=\"1.0\"?><WS><Usuario>"
+						+ "<username>"+username+"</username>"
+						+ "<activado>true</activado>"
+						+ "<habilitado>true</habilitado>"
+						+ "<email>"+email+"</email>"
+						+ "<password>"+encryptedPassword+"</password>"
+						+ "<nombre>"+nombres+"</nombre>"
+						+ "<apellido>"+apellido+"</apellido>"
+						+ "</Usuario></WS>");
 				
 				saveResponse = integracion.guardarDatos(saveRequest);
 				
@@ -70,31 +79,30 @@ public class LoginAPIHelper {
 				System.err.println(excepcionDeInvocacion.toString());
 				
 			}
-			*/
+			
 			// Envia mail para confirmacion
 		
-			IntegracionStub integracion = null;
-			IntegracionStub.GuardarDatos request = null;
-			IntegracionStub.GuardarDatosResponse response = null;
-			
-	
-			try{
-				integracion = new IntegracionStub();
-				request = new IntegracionStub.GuardarDatos();
-				
-				request.setXml("<?xml version=\"1.0\"?><WS><Usuario><username>"+username+"</username><nombre>"+nombres+"</nombre><apellido>"+apellido+"</apellido></Usuario></WS>");
-				
-				response = integracion.guardarDatos(request);
-			
-				System.out.println(response.get_return());
-			}catch(RemoteException excepcionDeInvocacion){
-				session.setReason(excepcionDeInvocacion.toString());
-				session.setSuccess(false);
-				
-			}
-			//session.setReason(response.get_return());
-			//session.setSuccess(true);
-		//}
+//			IntegracionStub integracion = null;
+//			IntegracionStub.GuardarDatos request = null;
+//			IntegracionStub.GuardarDatosResponse response = null;
+//			
+//	
+//			try{
+//				integracion = new IntegracionStub();
+//				request = new IntegracionStub.GuardarDatos();
+//				
+//				request.setXml("<?xml version=\"1.0\"?><WS><Usuario><username>"+username+"</username><nombre>"+nombres+"</nombre><apellido>"+apellido+"</apellido></Usuario></WS>");
+//				
+//				response = integracion.guardarDatos(request);
+//			
+//				System.out.println(response.get_return());
+//			}catch(RemoteException excepcionDeInvocacion){
+//				session.setReason(excepcionDeInvocacion.toString());
+//				session.setSuccess(false);
+//				
+//			}
+			session.setSuccess(true);
+		}
 
 		return xmlutil.convertToXml(session, SessionResponse.class);
 	}
