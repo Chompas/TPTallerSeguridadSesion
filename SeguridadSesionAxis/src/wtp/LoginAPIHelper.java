@@ -28,11 +28,10 @@ public class LoginAPIHelper {
 		try {
 			integracion = new IntegracionStub();
 			selectRequest = new IntegracionStub.SeleccionarDatos();
-			String xml = xmlutil.convertToXml(user, User.class);
-			//selectRequest.setXml("<?xml version=\"1.0\"?><WS>"
-			//		+ xml+ "</WS>");
-			selectRequest.setXml("<?xml version=\"1.0\"?><Usuario><username>"+username+"</username></Usuario>");
+			String xml = xmlutil.convertToXml(new UserWS(user), UserWS.class);
+			selectRequest.setXml(xml);
 			selectResponse = integracion.seleccionarDatos(selectRequest);
+			System.out.println("INTEGRACION RESPONSE: "+selectResponse.get_return());
 		} catch (RemoteException e) {
 			System.err.println(e.toString());
 		}
@@ -62,16 +61,7 @@ public class LoginAPIHelper {
 				integracion = new IntegracionStub();
 				saveRequest = new IntegracionStub.GuardarDatos();
 				
-				//saveRequest.setXml("<?xml version=\"1.0\"?>" + "<WS>" + xmlutil.convertToXml(user, User.class) + "</WS>");
-				saveRequest.setXml("<?xml version=\"1.0\"?><WS><Usuario>"
-						+ "<username>"+username+"</username>"
-						+ "<activado>true</activado>"
-						+ "<habilitado>true</habilitado>"
-						+ "<email>"+email+"</email>"
-						+ "<password>"+encryptedPassword+"</password>"
-						+ "<nombre>"+nombres+"</nombre>"
-						+ "<apellido>"+apellido+"</apellido>"
-						+ "</Usuario></WS>");
+				saveRequest.setXml(xmlutil.convertToXml(new UserWS(user), UserWS.class));
 				
 				saveResponse = integracion.guardarDatos(saveRequest);
 				
@@ -82,25 +72,6 @@ public class LoginAPIHelper {
 			
 			// Envia mail para confirmacion
 		
-//			IntegracionStub integracion = null;
-//			IntegracionStub.GuardarDatos request = null;
-//			IntegracionStub.GuardarDatosResponse response = null;
-//			
-//	
-//			try{
-//				integracion = new IntegracionStub();
-//				request = new IntegracionStub.GuardarDatos();
-//				
-//				request.setXml("<?xml version=\"1.0\"?><WS><Usuario><username>"+username+"</username><nombre>"+nombres+"</nombre><apellido>"+apellido+"</apellido></Usuario></WS>");
-//				
-//				response = integracion.guardarDatos(request);
-//			
-//				System.out.println(response.get_return());
-//			}catch(RemoteException excepcionDeInvocacion){
-//				session.setReason(excepcionDeInvocacion.toString());
-//				session.setSuccess(false);
-//				
-//			}
 			session.setSuccess(true);
 		}
 
@@ -124,9 +95,9 @@ public class LoginAPIHelper {
 		try {
 			integracion = new IntegracionStub();
 			selectRequest = new IntegracionStub.SeleccionarDatos();
-			selectRequest.setXml("<?xml version=\"1.0\"?><WS>"
-					+ xmlutil.convertToXml(user, User.class) + "</WS>");
+			selectRequest.setXml(xmlutil.convertToXml(new UserWS(user), UserWS.class));
 			selectResponse = integracion.seleccionarDatos(selectRequest);
+			System.out.println("INTEGRACION RESPONSE: "+ selectResponse.get_return());
 		} catch (RemoteException e) {
 			System.err.println(e.toString());
 		}
@@ -138,8 +109,8 @@ public class LoginAPIHelper {
 			session.setReason("No existe el usuario");
 		} else {
 			StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
-		//	String encryptedPassword = user.getPasswordFromXML(selectResponse.get_return());
-			String encryptedPassword = "SDadsad";
+			String encryptedPassword = user.getPasswordFromXML(selectResponse.get_return());
+			//String encryptedPassword = "SDadsad";
 			
 			Boolean success = false;
 			if (passwordEncryptor.checkPassword(password, encryptedPassword)) {
@@ -208,8 +179,7 @@ public class LoginAPIHelper {
 		try {
 			integracion = new IntegracionStub();
 			selectRequest = new IntegracionStub.ActualizarDatos();
-			selectRequest.setXml("<?xml version=\"1.0\"?><WS>"
-					+ xmlutil.convertToXml(user, User.class) + "</WS>");
+			selectRequest.setXml(xmlutil.convertToXml(new UserWS(user), UserWS.class));
 			selectResponse = integracion.actualizarDatos(selectRequest);
 		} catch (RemoteException e) {
 			System.err.println(e.toString());

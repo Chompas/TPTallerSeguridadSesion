@@ -5,10 +5,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.w3c.dom.Document;
-
-
-@XmlRootElement(name = "User")
+@XmlRootElement(name="Usuario")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class User {
 	
@@ -99,14 +96,44 @@ public class User {
 	
 	public Boolean usuarioExistente(String xmlData) {
 		XmlUtil xmlutil = new XmlUtil();
-		Document doc;
-		Boolean result;
+//		Document doc;
+//		Boolean result;
+//		try {
+//			doc = xmlutil.loadXMLFromString(xmlData);
+//			result = doc.getDocumentElement().getNodeName() == "WS";
+//		} catch(Exception e) {
+//			System.err.println(e.toString());
+//		}
+		Boolean result = false;
+		UserWS ws;
+		User user;
 		try {
-			doc = xmlutil.loadXMLFromString(xmlData);
-			result = doc.getDocumentElement().getNodeName() == "WS";
-		} catch(Exception e) {
+			ws = xmlutil.loadXMLFromString(xmlData);
+			user = ws.getUser();
+			if(user != null) {
+				result = true;
+			}
+		} catch (Exception e) {
 			System.err.println(e.toString());
 		}
-		return false;
+		
+		System.out.println("USUARIO EXISTENTE: "+result);
+		
+		return result;
+	}
+	public String getPasswordFromXML(String xmlData) {
+		XmlUtil xmlutil = new XmlUtil();
+		String password = "";
+		UserWS ws;
+		User user;
+		try {
+			ws = xmlutil.loadXMLFromString(xmlData);
+			user = ws.getUser();
+			password = user.getPassword();
+		} catch (Exception e) {
+			System.err.println(e.toString());
+		}
+		
+		return password;
 	}
 }
