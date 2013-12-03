@@ -10,7 +10,7 @@ package com.ws.services;
 
 public class IntegracionIOExceptionException extends java.lang.Exception{
 
-    private static final long serialVersionUID = 1384829691877L;
+    private static final long serialVersionUID = 1386042795596L;
     
     private com.ws.services.IntegracionStub.IntegracionIOException faultMessage;
 

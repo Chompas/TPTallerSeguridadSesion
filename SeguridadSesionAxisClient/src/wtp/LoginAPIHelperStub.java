@@ -202,7 +202,7 @@
      */
     public LoginAPIHelperStub(org.apache.axis2.context.ConfigurationContext configurationContext) throws org.apache.axis2.AxisFault {
         
-                    this(configurationContext,"http://localhost:8080/SeguridadSesionAxisClient/services/LoginAPIHelper.LoginAPIHelperHttpSoap12Endpoint/" );
+                    this(configurationContext,"http://localhost:8080/axis2/services/LoginAPIHelper.LoginAPIHelperHttpSoap12Endpoint/" );
                 
     }
 
@@ -211,7 +211,7 @@
      */
     public LoginAPIHelperStub() throws org.apache.axis2.AxisFault {
         
-                    this("http://localhost:8080/SeguridadSesionAxisClient/services/LoginAPIHelper.LoginAPIHelperHttpSoap12Endpoint/" );
+                    this("http://localhost:8080/axis2/services/LoginAPIHelper.LoginAPIHelperHttpSoap12Endpoint/" );
                 
     }
 
@@ -2677,14 +2677,14 @@
         }
         return false;
     }
-     //http://localhost:8080/SeguridadSesionAxisClient/services/LoginAPIHelper.LoginAPIHelperHttpSoap12Endpoint/
+     //http://localhost:8080/axis2/services/LoginAPIHelper.LoginAPIHelperHttpSoap12Endpoint/
         public static class ActivateUserResponse
         implements org.apache.axis2.databinding.ADBBean{
         
                 public static final javax.xml.namespace.QName MY_QNAME = new javax.xml.namespace.QName(
                 "http://wtp",
                 "activateUserResponse",
-                "ns1");
+                "ns5");
 
             
 
@@ -2814,7 +2814,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://wtp")){
-                return "ns1";
+                return "ns5";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -3131,7 +3131,7 @@
                 public static final javax.xml.namespace.QName MY_QNAME = new javax.xml.namespace.QName(
                 "http://wtp",
                 "loginResponse",
-                "ns1");
+                "ns5");
 
             
 
@@ -3261,7 +3261,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://wtp")){
-                return "ns1";
+                return "ns5";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -3578,7 +3578,7 @@
                 public static final javax.xml.namespace.QName MY_QNAME = new javax.xml.namespace.QName(
                 "http://wtp",
                 "isTokenValidResponse",
-                "ns1");
+                "ns5");
 
             
 
@@ -3708,7 +3708,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://wtp")){
-                return "ns1";
+                return "ns5";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -4025,7 +4025,7 @@
                 public static final javax.xml.namespace.QName MY_QNAME = new javax.xml.namespace.QName(
                 "http://wtp",
                 "changePasswordResponse",
-                "ns1");
+                "ns5");
 
             
 
@@ -4155,7 +4155,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://wtp")){
-                return "ns1";
+                return "ns5";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -4472,7 +4472,7 @@
                 public static final javax.xml.namespace.QName MY_QNAME = new javax.xml.namespace.QName(
                 "http://wtp",
                 "resetPassword",
-                "ns1");
+                "ns5");
 
             
 
@@ -4662,7 +4662,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://wtp")){
-                return "ns1";
+                return "ns5";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -5013,7 +5013,7 @@
                 public static final javax.xml.namespace.QName MY_QNAME = new javax.xml.namespace.QName(
                 "http://wtp",
                 "resetPasswordResponse",
-                "ns1");
+                "ns5");
 
             
 
@@ -5143,7 +5143,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://wtp")){
-                return "ns1";
+                return "ns5";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -5460,7 +5460,7 @@
                 public static final javax.xml.namespace.QName MY_QNAME = new javax.xml.namespace.QName(
                 "http://wtp",
                 "enableAccount",
-                "ns1");
+                "ns5");
 
             
 
@@ -5650,7 +5650,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://wtp")){
-                return "ns1";
+                return "ns5";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -6001,7 +6001,7 @@
                 public static final javax.xml.namespace.QName MY_QNAME = new javax.xml.namespace.QName(
                 "http://wtp",
                 "enableAccountResponse",
-                "ns1");
+                "ns5");
 
             
 
@@ -6131,7 +6131,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://wtp")){
-                return "ns1";
+                return "ns5";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -6448,7 +6448,7 @@
                 public static final javax.xml.namespace.QName MY_QNAME = new javax.xml.namespace.QName(
                 "http://wtp",
                 "logout",
-                "ns1");
+                "ns5");
 
             
 
@@ -6578,7 +6578,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://wtp")){
-                return "ns1";
+                return "ns5";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -6907,7 +6907,7 @@
                 public static final javax.xml.namespace.QName MY_QNAME = new javax.xml.namespace.QName(
                 "http://wtp",
                 "registerUserResponse",
-                "ns1");
+                "ns5");
 
             
 
@@ -7037,7 +7037,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://wtp")){
-                return "ns1";
+                return "ns5";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -7354,7 +7354,7 @@
                 public static final javax.xml.namespace.QName MY_QNAME = new javax.xml.namespace.QName(
                 "http://wtp",
                 "activateUser",
-                "ns1");
+                "ns5");
 
             
 
@@ -7484,7 +7484,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://wtp")){
-                return "ns1";
+                return "ns5";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -7801,7 +7801,7 @@
                 public static final javax.xml.namespace.QName MY_QNAME = new javax.xml.namespace.QName(
                 "http://wtp",
                 "changePassword",
-                "ns1");
+                "ns5");
 
             
 
@@ -8111,7 +8111,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://wtp")){
-                return "ns1";
+                return "ns5";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -8530,7 +8530,7 @@
                 public static final javax.xml.namespace.QName MY_QNAME = new javax.xml.namespace.QName(
                 "http://wtp",
                 "login",
-                "ns1");
+                "ns5");
 
             
 
@@ -8720,7 +8720,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://wtp")){
-                return "ns1";
+                return "ns5";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -9071,7 +9071,7 @@
                 public static final javax.xml.namespace.QName MY_QNAME = new javax.xml.namespace.QName(
                 "http://wtp",
                 "isTokenValid",
-                "ns1");
+                "ns5");
 
             
 
@@ -9201,7 +9201,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://wtp")){
-                return "ns1";
+                return "ns5";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -9518,7 +9518,7 @@
                 public static final javax.xml.namespace.QName MY_QNAME = new javax.xml.namespace.QName(
                 "http://wtp",
                 "registerUser",
-                "ns1");
+                "ns5");
 
             
 
@@ -10066,7 +10066,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://wtp")){
-                return "ns1";
+                return "ns5";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -10619,7 +10619,7 @@
                 public static final javax.xml.namespace.QName MY_QNAME = new javax.xml.namespace.QName(
                 "http://wtp",
                 "disableAccountResponse",
-                "ns1");
+                "ns5");
 
             
 
@@ -10749,7 +10749,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://wtp")){
-                return "ns1";
+                return "ns5";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -11066,7 +11066,7 @@
                 public static final javax.xml.namespace.QName MY_QNAME = new javax.xml.namespace.QName(
                 "http://wtp",
                 "logoutResponse",
-                "ns1");
+                "ns5");
 
             
 
@@ -11196,7 +11196,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://wtp")){
-                return "ns1";
+                return "ns5";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -11513,7 +11513,7 @@
                 public static final javax.xml.namespace.QName MY_QNAME = new javax.xml.namespace.QName(
                 "http://wtp",
                 "disableAccount",
-                "ns1");
+                "ns5");
 
             
 
@@ -11703,7 +11703,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://wtp")){
-                return "ns1";
+                return "ns5";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }

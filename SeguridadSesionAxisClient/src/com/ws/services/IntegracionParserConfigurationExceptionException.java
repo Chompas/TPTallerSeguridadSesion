@@ -10,7 +10,7 @@ package com.ws.services;
 
 public class IntegracionParserConfigurationExceptionException extends java.lang.Exception{
 
-    private static final long serialVersionUID = 1385076141027L;
+    private static final long serialVersionUID = 1385159082053L;
     
     private com.ws.services.IntegracionStub.IntegracionParserConfigurationException faultMessage;
 

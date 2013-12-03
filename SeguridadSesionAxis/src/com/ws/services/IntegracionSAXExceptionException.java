@@ -10,7 +10,7 @@ package com.ws.services;
 
 public class IntegracionSAXExceptionException extends java.lang.Exception{
 
-    private static final long serialVersionUID = 1384829691887L;
+    private static final long serialVersionUID = 1386042795621L;
     
     private com.ws.services.IntegracionStub.IntegracionSAXException faultMessage;
 
