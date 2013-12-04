@@ -1,6 +1,15 @@
 package wtp;
 
 import java.rmi.RemoteException;
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import org.jasypt.util.password.StrongPasswordEncryptor;
 
@@ -65,12 +74,47 @@ public class LoginAPIHelper {
 				
 				saveResponse = integracion.guardarDatos(saveRequest);
 				
+				// Falta chequear que se hizo bien el save, en ese caso, env’amos mail
+				// Falta enviar al usuario que se registr—
+				
+				final String mailUsername = "redsocialeducativafiuba@gmail.com";
+				final String mailPassword = "redsocialeducativa123";
+		 
+				Properties props = new Properties();
+				props.put("mail.smtp.auth", "true");
+				props.put("mail.smtp.starttls.enable", "true");
+				props.put("mail.smtp.host", "smtp.gmail.com");
+				props.put("mail.smtp.port", "587");
+		 
+				Session mailSession = Session.getInstance(props,
+				  new javax.mail.Authenticator() {
+					protected PasswordAuthentication getPasswordAuthentication() {
+						return new PasswordAuthentication(mailUsername, mailPassword);
+					}
+				  });
+		 
+				try {
+		 
+					Message message = new MimeMessage(mailSession);
+					message.setFrom(new InternetAddress("redsocialeducativafiuba@gmail.com"));
+					message.setRecipients(Message.RecipientType.TO,
+						InternetAddress.parse("redsocialeducativafiuba@gmail.com"));
+					message.setSubject("Activacion de usuario");
+					message.setText(""
+						+ "\n\n Para activar su usuario haga click en el siguiente link");
+		 
+					Transport.send(message);
+		 
+					System.out.println("Done");
+		 
+				} catch (MessagingException e) {
+					throw new RuntimeException(e);
+				}
+				
 			} catch (RemoteException excepcionDeInvocacion) {
 				System.err.println(excepcionDeInvocacion.toString());
 				
 			}
-			
-			// Envia mail para confirmacion
 		
 			session.setSuccess(true);
 		}
