@@ -14,12 +14,12 @@ public class ConverterClient {
         	LoginAPIHelperStub.RegisterUser request3 = new LoginAPIHelperStub.RegisterUser();
         	LoginAPIHelperStub.RegisterUserResponse response3 = new LoginAPIHelperStub.RegisterUserResponse();
         	
-        	request3.setUsername("sysTEST");
-        	request3.setApellido("test");
-        	request3.setEmail("dsada");
+        	request3.setUsername("javi");
+        	request3.setApellido("Lara");
+        	request3.setEmail("jlara91@gmail.com");
         	request3.setFecha("11/10/1991");
-        	request3.setNombres("test");
-        	request3.setPadron("123-2");
+        	request3.setNombres("Javier");
+        	request3.setPadron("123123");
         	request3.setPassword("123456");
         	request3.setRol(1);
         	

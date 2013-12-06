@@ -77,6 +77,9 @@ public class LoginAPIHelper {
 				// Falta chequear que se hizo bien el save, en ese caso, env’amos mail
 				// Falta enviar al usuario que se registr—
 				
+				String activationToken = TokenManager.getInstance().getToken();
+				TokenManager.getInstance().setActivationToken(activationToken, username);
+				
 				final String mailUsername = "redsocialeducativafiuba@gmail.com";
 				final String mailPassword = "redsocialeducativa123";
 		 
@@ -98,10 +101,13 @@ public class LoginAPIHelper {
 					Message message = new MimeMessage(mailSession);
 					message.setFrom(new InternetAddress("redsocialeducativafiuba@gmail.com"));
 					message.setRecipients(Message.RecipientType.TO,
-						InternetAddress.parse("redsocialeducativafiuba@gmail.com"));
+						InternetAddress.parse(email));
 					message.setSubject("Activacion de usuario");
-					message.setText(""
-						+ "\n\n Para activar su usuario haga click en el siguiente link");
+					message.setContent(
+							"<p>Para activar su usuario haga click en el siguiente link:</p> "
+							+ "<a href='http://localhost:8080/axis2/services/LoginAPIHelper/activateUserWithToken?" + activationToken 
+							+ "'>http://localhost:8080/axis2/services/LoginAPIHelper/activateUserWithToken?" + activationToken 
+							+ "</a>", "text/html");
 		 
 					Transport.send(message);
 		 
@@ -232,6 +238,27 @@ public class LoginAPIHelper {
 		SessionResponse session = new SessionResponse();
 		session.setSuccess(true);
 		return xmlutil.convertToXml(session, SessionResponse.class);
+	}
+	
+	public String activateUserWithToken(String activationToken) {
+		
+		String response = new String();
+		
+		String username = TokenManager.getInstance().activationTokenValid(activationToken);
+		if (username != null) {
+			// Existe el usuario lo activo
+			String xmlResponse = this.activateUser(username);
+			
+			// Chequear respuesta
+			// Si no hay error
+			response = "Usuario " + username + " activado correctamente";
+			TokenManager.getInstance().removeActivationToken(username);
+			
+		} else {
+			response = "Error: No se encontro el nœmero de activacion";
+		}
+		
+		return response;
 	}
 
 	public String changePassword(String authToken, String oldPassword,
