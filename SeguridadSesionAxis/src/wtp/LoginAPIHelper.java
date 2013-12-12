@@ -10,6 +10,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.ServletContext;
 
 import org.jasypt.util.password.StrongPasswordEncryptor;
 
@@ -105,8 +106,8 @@ public class LoginAPIHelper {
 					message.setSubject("Activacion de usuario");
 					message.setContent(
 							"<p>Para activar su usuario haga click en el siguiente link:</p> "
-							+ "<a href='http://localhost:8080/axis2/services/LoginAPIHelper/activateUserWithToken?" + activationToken 
-							+ "'>http://localhost:8080/axis2/services/LoginAPIHelper/activateUserWithToken?" + activationToken 
+							+ "<a href='http://localhost:8080/axis2/services/LoginAPIHelper/activateUserWithToken?activationToken=" + activationToken 
+							+ "'>http://localhost:8080/axis2/services/LoginAPIHelper/activateUserWithToken?activationToken=" + activationToken 
 							+ "</a>", "text/html");
 		 
 					Transport.send(message);
