@@ -37,7 +37,7 @@ public class LoginAPIHelper {
 		try {
 			integracion = new IntegracionStub();
 			selectRequest = new IntegracionStub.SeleccionarDatos();
-			String xml = xmlutil.convertToXml(new UserWS(user), UserWS.class);
+			String xml = xmlutil.convertToXml(new UserWSForSelect(user), UserWSForSelect.class);
 			selectRequest.setXml(xml);
 			selectResponse = integracion.seleccionarDatos(selectRequest);
 			System.out.println("INTEGRACION RESPONSE: "+selectResponse.get_return());
@@ -70,7 +70,7 @@ public class LoginAPIHelper {
 				integracion = new IntegracionStub();
 				saveRequest = new IntegracionStub.GuardarDatos();
 				
-				saveRequest.setXml(xmlutil.convertToXml(new UserWS(user), UserWS.class));
+				saveRequest.setXml(xmlutil.convertToXml(new UserWSForSelect(user), UserWSForSelect.class));
 				
 				saveResponse = integracion.guardarDatos(saveRequest);
 				
@@ -145,7 +145,7 @@ public class LoginAPIHelper {
 		try {
 			integracion = new IntegracionStub();
 			selectRequest = new IntegracionStub.SeleccionarDatos();
-			selectRequest.setXml(xmlutil.convertToXml(new UserWS(user), UserWS.class));
+			selectRequest.setXml(xmlutil.convertToXml(new UserWSForSelect(user), UserWSForSelect.class));
 			selectResponse = integracion.seleccionarDatos(selectRequest);
 			System.out.println("INTEGRACION RESPONSE: "+ selectResponse.get_return());
 		} catch (RemoteException e) {
@@ -229,7 +229,7 @@ public class LoginAPIHelper {
 		try {
 			integracion = new IntegracionStub();
 			selectRequest = new IntegracionStub.ActualizarDatos();
-			selectRequest.setXml(xmlutil.convertToXml(new UserWS(user), UserWS.class));
+			selectRequest.setXml(xmlutil.convertToXml(new UserWSForSelect(user), UserWSForSelect.class));
 			selectResponse = integracion.actualizarDatos(selectRequest);
 		} catch (RemoteException e) {
 			System.err.println(e.toString());
